@@ -30,7 +30,7 @@ board.on("ready", function () {
       console.log("Start")
       led.on()
       startTime = new Date().getTime()
-      if(gap) {
+      if(gap) { //gaps get pushed with the next motion start
         ref.push({
           start: latestMotion,
           end: startTime,
@@ -63,8 +63,8 @@ board.on("ready", function () {
     if(!(latestMotion === null) && startTime === null && gap === false) { 
       //gaps are only recorded if they are at least 3 time units long
       if((data['timestamp']-latestMotion)>=(3*timeUnit)) {
+        console.log("Gap will be added to fb on next start")
         gap = true  
-        console.log("short gap")
       }
       else {
         gap = false
