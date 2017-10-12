@@ -11,7 +11,7 @@ var db = admin.database()
 var ref = db.ref("/rawData")
 
 ref.on("value", function (snapshot) {
-    decoder.decode(snapshot)
+    decoder.decode(snapshot, admin)
 }, function (errorObject) {
     console.log("The read failed: " + errorObject.code)
 })

@@ -9,7 +9,7 @@ let currentWord = ""
 let decodedWord = ""
 
 module.exports = {
-    decode: function(event) {
+    decode: function(event, admin) {
         const allData = event.val()
         // get last value
         const keys = Object.keys(allData)
