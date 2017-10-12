@@ -1,5 +1,6 @@
 var admin = require("firebase-admin")
 var serviceAccount = require("./serviceAccountKey.json")
+var decoder = require("./functions/decoder.js")
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -7,16 +8,15 @@ admin.initializeApp({
 })
 
 var db = admin.database()
-var ref = db.ref("/motionCount")
+var ref = db.ref("/rawData")
 
 ref.on("value", function (snapshot) {
-    console.log("new val!")
+    decoder.decode(snapshot)
 }, function (errorObject) {
     console.log("The read failed: " + errorObject.code)
 })
 
 const mock = [
-    { type: "start" },
     { end: "2", start: "1", type: "mark" },
     { end: "3", start: "2", type: "mark" },
     { end: "4", start: "3", type: "mark" },
@@ -36,17 +36,16 @@ const mock = [
     { end: "29", start: "22", type: "gap" }
 ]
 
-function test(n) {
-    if (n < mock.length - 1) {
+function pushMock(counter) {
+    if (counter < mock.length) {
+        let motionLength = parseInt(mock[counter].end) - parseInt(mock[counter].start)
+        motionLength = motionLength*1000*2
         setTimeout(() => {
-            ref.push(mock[n])
-            test(++n)
-        }, 0)
+            counter++
+            pushMock(counter)
+        }, motionLength)
+        ref.push(mock[counter])
     }
 }
 
-setTimeout(() => {
-    ref.push(mock[mock.length - 1])
-}, 7000)
-
-test(0)
+pushMock(0)
