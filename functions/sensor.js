@@ -3,7 +3,15 @@ var gap = false
 var five = require("johnny-five")
 var board = new five.Board()
 var admin = require("firebase-admin")
+
+var serviceAccount = require("../serviceAccountKey.json")
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://fit3140-a5.firebaseio.com"
+});
+
 var db = admin.database()
+
 var ref = db.ref('/rawData')
 
 board.on("ready", function () {
