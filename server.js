@@ -36,16 +36,16 @@ const mock = [
     { end: "29", start: "22", type: "gap" }
 ]
 
-function pushMock(counter) {
-    if (counter < mock.length) {
-        let motionLength = parseInt(mock[counter].end) - parseInt(mock[counter].start)
-        motionLength = motionLength*1000*2
-        setTimeout(() => {
-            counter++
-            pushMock(counter)
-        }, motionLength)
-        ref.push(mock[counter])
-    }
-}
+// function pushMock(counter) {
+//     if (counter < mock.length) {
+//         let motionLength = parseInt(mock[counter].end) - parseInt(mock[counter].start)
+//         motionLength = motionLength*1000*2
+//         setTimeout(() => {
+//             counter++
+//             pushMock(counter)
+//         }, motionLength)
+//         ref.push(mock[counter])
+//     }
+// }
 
-pushMock(0)
+// pushMock(0)

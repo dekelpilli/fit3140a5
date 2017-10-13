@@ -10,10 +10,10 @@ let decodedWord = ""
 
 module.exports = {
     decode: function(event, admin) {
-        const allData = event.val()
+        const allData = event.val() 
         // get last value
         const keys = Object.keys(allData)
-        console.log(allData)
+        // console.log(allData)
         const motionData = allData[keys[keys.length-1]]
 
         // getting length of motion
@@ -40,7 +40,11 @@ module.exports = {
                     decodedWord += morseTable[currentWord]
                     currentWord = ""
                 }
-                return admin.database().ref("/morse").push({"word": decodedWord})
+                if (admin) {
+                    return admin.database().ref("/morse").push({"word": decodedWord})
+                } else {
+                    // console.log("DECODED WORD: " + decodedWord)
+                }
             }
         } else if (motionData.type == "mark") {
             // short mark
@@ -53,6 +57,6 @@ module.exports = {
                 currentWord += "L"
             }
         }
-        console.log(currentWord + " " + decodedWord)
+        console.log("Morse code: " + currentWord + ", Decoded: " + decodedWord)
     }
 }
