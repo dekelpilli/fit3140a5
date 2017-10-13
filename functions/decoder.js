@@ -43,17 +43,19 @@ Decoder.prototype.decode = function() {
         // end of word
         } else if (motionLength => 7.0) {
             winston.info("Long gap detected")
-
+            
             if (morseTable.hasOwnProperty(this._currentWord)) {
                 this._decodedWord += morseTable[this._currentWord] + " "
                 this._currentWord = ""
             }
             if (this._admin) {
-                return this._admin.database().ref("/morseDecoded").push(
+                this._admin.database().ref("/morseDecoded").push(
                     {
                         "wordEnd": motionData.end,
                         "Value": this._decodedWord
                     })
+                winston.info("Pushed")
+                return
             } else {
                 winston.info("DECODED WORD: " + decodedWord)
             }
@@ -77,5 +79,22 @@ Decoder.prototype.decodeAll = function() {
         this.decode();
     }
 }
+
+
+
+var dbAdmin = require("firebase-admin")
+
+var serviceAccount = require("../serviceAccountKey.json")
+dbAdmin.initializeApp({
+  credential: dbAdmin.credential.cert(serviceAccount),
+  databaseURL: "https://fit3140-a5.firebaseio.com"
+});
+var snap;
+dbAdmin.database().ref('/rawData').on('value', function(snapshot) {
+    winston.info("Update received")
+    snap = snapshot.val()
+    dc = new Decoder(snap, dbAdmin)
+    dc.decodeAll()
+})
 
 module.exports = Decoder;
