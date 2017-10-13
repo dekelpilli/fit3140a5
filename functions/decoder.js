@@ -49,7 +49,11 @@ Decoder.prototype.decode = function() {
                 this._currentWord = ""
             }
             if (this._admin) {
-                return this._admin.database().ref("/morse").push({"word": this._decodedWord})
+                return this._admin.database().ref("/morseDecoded").push(
+                    {
+                        "wordEnd": motionData.end,
+                        "Value": this._decodedWord
+                    })
             } else {
                 winston.info("DECODED WORD: " + decodedWord)
             }
@@ -73,6 +77,5 @@ Decoder.prototype.decodeAll = function() {
         this.decode();
     }
 }
-
 
 module.exports = Decoder;
