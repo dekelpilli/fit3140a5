@@ -45,7 +45,7 @@ Decoder.prototype.decode = function() {
             winston.info("Long gap detected")
             
             if (morseTable.hasOwnProperty(this._currentWord)) {
-                this._decodedWord += morseTable[this._currentWord] + " "
+                this._decodedWord += morseTable[this._currentWord]
                 this._currentWord = ""
             }
             if (this._admin) {
@@ -54,6 +54,7 @@ Decoder.prototype.decode = function() {
                         "wordEnd": motionData.end,
                         "Value": this._decodedWord
                     })
+                this._decodedWord = ""
                 winston.info("Pushed")
                 return
             } else {
