@@ -75,7 +75,10 @@ Decoder.prototype.decode = function() {
 }
 
 Decoder.prototype.decodeAll = function() {
-    while(this._event.length > 0) {
+    winston.info("Reading started")
+    console.log(this._event)
+    console.log(Object.keys(this._event).length)
+    while(Object.keys(this._event).length > 0) {
         this.decode();
     }
 }
@@ -90,10 +93,20 @@ dbAdmin.initializeApp({
   databaseURL: "https://fit3140-a5.firebaseio.com"
 });
 var snap;
+var values =[]
+var keys;
 dbAdmin.database().ref('/rawData').on('value', function(snapshot) {
+    values = []
     winston.info("Update received")
     snap = snapshot.val()
-    dc = new Decoder(snap, dbAdmin)
+
+    keys = Object.keys(snap)
+    for(var i = 0; i< keys.length; i++) {
+        values.push(snap[keys[i]])
+    }
+
+    dc = new Decoder(values, dbAdmin)
+
     dc.decodeAll()
 })
 
