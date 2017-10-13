@@ -8,7 +8,7 @@ admin.initializeApp({
 });
 
 var db = admin.database()
-var ref = db.ref('/rawData')
+var ref = db.ref('/morseDecoded')
 
 var logged = {}
 
