@@ -26,8 +26,16 @@ Decoder.prototype.decode = function() {
 
     // getting length of motion
     let motionLength = parseFloat(motionData.end) - parseFloat(motionData.start)
+    
     // converting to seconds
     motionLength = motionLength / 1000
+
+    console.log(motionLength)
+
+    if(this._delete) {
+        this._decodedWord = ""
+        this._delete = false
+    }
 
     // if signal is a gap
     if (motionData.type === "gap") {
@@ -39,13 +47,19 @@ Decoder.prototype.decode = function() {
             if (morseTable.hasOwnProperty(this._currentWord)) {
                 this._decodedWord += morseTable[this._currentWord]
                 this._currentWord = ""
-            } 
+            } else {
+                winston.debug(this._currentWord + " is not a valid word")
+                this._currentWord = ""
+            }
         // end of word
         } else if (motionLength => 7.0) {
             winston.info("Long gap detected")
             
             if (morseTable.hasOwnProperty(this._currentWord)) {
-                this._decodedWord += morseTable[this._currentWord] + " "
+                this._decodedWord += morseTable[this._currentWord]
+                this._currentWord = ""
+            } else {
+                winston.debug(this._currentWord + " is not a valid word")
                 this._currentWord = ""
             }
             if (this._admin) {
@@ -53,11 +67,15 @@ Decoder.prototype.decode = function() {
                     {
                         "wordEnd": motionData.end,
                         "Value": this._decodedWord
-                    })
+                    },function() {
+                        this._decodedWord = ""
+                    }
+                )
                 winston.info("Pushed")
                 return
             } else {
-                winston.info("DECODED WORD: " + decodedWord)
+                winston.info("DECODED WORD: " + this._decodedWord)
+                this._delete = true;
             }
         }
     } else if (motionData.type == "mark") {
@@ -85,7 +103,7 @@ Decoder.prototype.decodeAll = function() {
 
 
 
-var dbAdmin = require("firebase-admin")
+/*var dbAdmin = require("firebase-admin")
 
 var serviceAccount = require("../serviceAccountKey.json")
 dbAdmin.initializeApp({
@@ -105,9 +123,9 @@ dbAdmin.database().ref('/rawData').on('value', function(snapshot) {
         values.push(snap[keys[i]])
     }
 
-    dc = new Decoder(values, dbAdmin)
+    dc = new Decoder(values.reverse(), dbAdmin)
 
     dc.decodeAll()
-})
+})*/
 
 module.exports = Decoder;
