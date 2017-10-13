@@ -63,14 +63,15 @@ Decoder.prototype.decode = function() {
                 this._currentWord = ""
             }
             if (this._admin) {
-                this._admin.database().ref("/morseDecoded").push(
-                    {
-                        "wordEnd": motionData.end,
-                        "Value": this._decodedWord
-                    },function() {
-                        this._decodedWord = ""
-                    }
-                )
+                write = this._decodedWord
+                this._decodedWord = ""
+                if(write.length > 0) {
+                    this._admin.database().ref("/morseDecoded").push(
+                        {
+                            "wordEnd": motionData.end,
+                            "Value": write
+                        })
+                }
                 winston.info("Pushed")
                 return
             } else {
