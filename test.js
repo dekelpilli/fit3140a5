@@ -142,6 +142,7 @@ function morseSimulator(msg, callBack) {
     }
 
     buildEvents();
+    console.log(events)
     loop();
 }
 
@@ -149,14 +150,13 @@ function dc(signal) {
     decoder.decode(signal, null)
 }
 
-//morseSimulator("SOS", dc);
+function idk(test, testing) {
+    console.log("input = " + test)
+}
 
-morseSimulator("A  B", dc);
+module.exports = idk;
 
-
-
-
-
+morseSimulator("THIS IS A TEST", decoder);
 
 
 

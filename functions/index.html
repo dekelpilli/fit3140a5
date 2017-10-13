@@ -63,7 +63,7 @@
         if (isSignedIn) {
           authorizeButton.style.display = 'none';
           signoutButton.style.display = 'block';
-          var socket = io.connect("http://lcalhost:8000", {reconnection:false});
+          var socket = io.connect("http://localhost:8000", {reconnection:false});
           
           //TODO: SEND LOGIN MESSAGE TO SERVER HERE
 
