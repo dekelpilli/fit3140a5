@@ -37,7 +37,7 @@ module.exports = {
                 console.log("Long gap detected")
 
                 if (morseTable.hasOwnProperty(currentWord)) {
-                    decodedWord += morseTable[currentWord]
+                    decodedWord += morseTable[currentWord] + " "
                     currentWord = ""
                 }
                 if (admin) {

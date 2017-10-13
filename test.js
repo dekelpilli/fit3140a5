@@ -45,6 +45,9 @@ function morseSimulator(msg, callBack) {
     var INTER_LETTER = 3000;
     var INTER_WORDS = 7000;
     var words = msg.split(" ");
+    while(words.indexOf("") > -1) {
+        words.splice(words.indexOf(""), 1);
+    }
     console.log('I got ' + words.length + ' words');
     var word = "";
     var codeIndex = 0;
@@ -146,7 +149,10 @@ function dc(signal) {
     decoder.decode(signal, null)
 }
 
-morseSimulator("SOS", dc);
+//morseSimulator("SOS", dc);
+
+morseSimulator("A  B", dc);
+
 
 
 
