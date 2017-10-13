@@ -7,25 +7,25 @@ describe('decoder testing', function() {
 it('One word',
     function() {
         obj = new dc([
-        // gap between words
-        { end: "29000", start: "22000", type: "gap" },
-        // S
-        { end: "2000", start: "1000", type: "mark" },
-        { end: "3000", start: "2000", type: "mark" },
-        { end: "4000", start: "3000", type: "mark" },
-        // gap between letters
-        { end: "8000", start: "4000", type: "gap" },
-        // O
-        { end: "10000", start: "7000", type: "mark" },
-        { end: "13000", start: "10000", type: "mark" },
-        { end: "16000", start: "13000", type: "mark" },
-        // gap between letters
-        { end: "19000", start: "16000", type: "gap" },
-        // S                      
-        { end: "20000", start: "19000", type: "mark" },
-        { end: "21000", start: "20000", type: "mark" },
-        { end: "22000", start: "21000", type: "mark" }
-        ], null)
+            // gap between words
+            { end: "29000", start: "22000", type: "gap" },
+            // S
+            { end: "2000", start: "1000", type: "mark" },
+            { end: "3000", start: "2000", type: "mark" },
+            { end: "4000", start: "3000", type: "mark" },
+            // gap between letters
+            { end: "8000", start: "4000", type: "gap" },
+            // O
+            { end: "10000", start: "7000", type: "mark" },
+            { end: "13000", start: "10000", type: "mark" },
+            { end: "16000", start: "13000", type: "mark" },
+            // gap between letters
+            { end: "19000", start: "16000", type: "gap" },
+            // S                      
+            { end: "20000", start: "19000", type: "mark" },
+            { end: "21000", start: "20000", type: "mark" },
+            { end: "22000", start: "21000", type: "mark" }
+            ], null)
         obj.decodeAll()
 
         expect(obj._decodedWord).to.equal("SOS")
@@ -71,7 +71,34 @@ it('Seperate words',
         ], null)
         obj.decodeAll()
 
-        expect(obj._decodedWord).to.equal("THIS IS A TEST")
-    }
-)
+        expect(obj._decodedWord).to.equal("TEST")
+    })
+
+it('One word with invalid letter',
+    function() {
+        obj = new dc([
+            // gap between words
+            { end: "29000", start: "22000", type: "gap" },
+            // S
+            { end: "2000", start: "1000", type: "mark" },
+            { end: "3000", start: "2000", type: "mark" },
+            { end: "4000", start: "3000", type: "mark" },
+            // gap between letters
+            { end: "8000", start: "4000", type: "gap" },
+            // O
+            { end: "10000", start: "7000", type: "mark" },
+            { end: "13000", start: "10000", type: "mark" },
+            { end: "15000", start: "14000", type: "mark" },
+            { end: "16000", start: "15000", type: "mark" },
+            // gap between letters
+            { end: "19000", start: "16000", type: "gap" },
+            // S                      
+            { end: "20000", start: "19000", type: "mark" },
+            { end: "21000", start: "20000", type: "mark" },
+            { end: "22000", start: "21000", type: "mark" }
+            ], null)
+        obj.decodeAll()
+
+        expect(obj._decodedWord).to.equal("SS")
+    })
 })

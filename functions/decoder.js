@@ -21,32 +21,45 @@ Decoder.prototype.decode = function() {
     // get last value
     const keys = Object.keys(this._event)
 
-    var motionData = this._event[keys[keys.length-1]]
-    //remove from list
-    this._event.splice(-1,1)
+    const motionData = this._event[keys[keys.length-1]]
+    this._event.splice(keys.length-1,1)
 
     // getting length of motion
     let motionLength = parseFloat(motionData.end) - parseFloat(motionData.start)
+    
     // converting to seconds
     motionLength = motionLength / 1000
+
+    console.log(motionLength)
+
+    if(this._delete) {
+        this._decodedWord = ""
+        this._delete = false
+    }
 
     // if signal is a gap
     if (motionData.type === "gap") {
         // end of letter
         if (motionLength >= 3.0 && motionLength < 7.0) {
-            //winston.info("Short gap detected")
+            winston.info("Short gap detected")
 
             // only add letter if it is valid, otherwise ignore
             if (morseTable.hasOwnProperty(this._currentWord)) {
                 this._decodedWord += morseTable[this._currentWord]
                 this._currentWord = ""
-            } 
+            } else {
+                winston.debug(this._currentWord + " is not a valid word")
+                this._currentWord = ""
+            }
         // end of word
         } else if (motionLength => 7.0) {
-            //winston.info("Long gap detected")
+            winston.info("Long gap detected")
             
             if (morseTable.hasOwnProperty(this._currentWord)) {
                 this._decodedWord += morseTable[this._currentWord]
+                this._currentWord = ""
+            } else {
+                winston.debug(this._currentWord + " is not a valid word")
                 this._currentWord = ""
             }
             if (this._admin) {
@@ -54,21 +67,25 @@ Decoder.prototype.decode = function() {
                     {
                         "wordEnd": motionData.end,
                         "Value": this._decodedWord
-                    })
-                //winston.info("Pushed")
+                    },function() {
+                        this._decodedWord = ""
+                    }
+                )
+                winston.info("Pushed")
                 return
             } else {
-                ///winston.info("DECODED WORD: " + decodedWord)
+                winston.info("DECODED WORD: " + this._decodedWord)
+                this._delete = true;
             }
         }
     } else if (motionData.type == "mark") {
         // short mark
         if (motionLength < 3.0) {
-            //winston.info("Short mark detected")
+            winston.info("Short mark detected")
             this._currentWord += "S"
         // long mark
         } else if (motionLength => 3.0 && motionLength <= 7.0) {
-            //winston.info("Long mark detected")
+            winston.info("Long mark detected")
             this._currentWord += "L"
         }
     }
@@ -81,9 +98,7 @@ Decoder.prototype.decodeAll = function() {
     console.log(Object.keys(this._event).length)
     while(Object.keys(this._event).length > 0) {
         this.decode();
-        winston.info(Object.keys(this._event).length)
     }
 }
-
 
 module.exports = Decoder;
