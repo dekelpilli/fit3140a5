@@ -28,7 +28,7 @@ it('One word',
         ], null)
         obj.decodeAll()
 
-        expect(obj._decodedWord).to.equal("SOS ")
+        expect(obj._decodedWord).to.equal("SOS")
     })
 
 it('Seperate words',
@@ -71,7 +71,7 @@ it('Seperate words',
         ], null)
         obj.decodeAll()
 
-        expect(obj._decodedWord).to.equal("THIS IS A TEST ")
+        expect(obj._decodedWord).to.equal("THIS IS A TEST")
     }
 )
 })

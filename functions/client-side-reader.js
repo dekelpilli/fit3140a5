@@ -18,7 +18,7 @@ ref.on('value', function(snapshot) {
     for (i = 0; i < keys.length; i++) { 
         item = snapshot.val()[keys[i]]
         words[item["wordEnd"]] = item["Value"]
-        console.log("wrong log: " + words[item["wordEnd"]])
+        //console.log("wrong log: " + words[item["wordEnd"]])
     }
     wordKeys = Object.keys(words)
     for (i = 0; i < wordKeys.length; i++) { 
