@@ -6,9 +6,6 @@ var admin = require("firebase-admin")
 var db = admin.database()
 var ref = db.ref('/rawData')
 
-
-
-
 board.on("ready", function () {
   // interfaces for led and motion detector
   var led = new five.Led(13)
