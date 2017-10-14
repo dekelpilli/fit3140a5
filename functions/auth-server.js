@@ -28,5 +28,4 @@ io.on("connection", function(socket) {
   })
 })
 
-
-sensor(io, five, ref)
+sensor(ref, five)

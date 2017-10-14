@@ -1,6 +1,7 @@
 var timeUnit = 1000 //on time unit, in ms. Seven of these mark a word end.
 var gap = false
-var five = require("johnny-five")
+
+/*var five = require("johnny-five")
 var board = new five.Board()
 var admin = require("firebase-admin")
 
@@ -12,8 +13,10 @@ admin.initializeApp({
 
 var db = admin.database()
 
-var ref = db.ref('/rawData')
+var ref = db.ref('/rawData')*/
 
+function run(red, five) {
+board = new five.Board()
 board.on("ready", function () {
   // interfaces for led and motion detector
   var led = new five.Led(13)
@@ -70,3 +73,5 @@ board.on("ready", function () {
     }
   })  
 })
+}
+module.exports = run;
