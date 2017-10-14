@@ -10,8 +10,7 @@ To run the tests, from the main folder, enter the following command:
 ### Viewing
 Use `node client-side-reader.js` from the *functions* folder to view data on the firebase. This will update with any new morseDecoded pushes.
 
-### Sensor
-Use `node sensor.js` from the *functions* folder to get data from the Arduino and push to the rawData on the firebase. 
+### Sensor & Authentication
+To use the sensor, you must be logged in with a Monash email. To do so, run `auth-server.js` in the *functions* and load `localhost:8000`, then log in. Once you have logged in with a Monash email, the system will open up the sensor. The sensor will automatically connect to the firebase and send the motion information.  
 
-### Authentication
-At first, we attempted to implement authentication via `auth-server.js` and `index.html`, but were unable to compelete it. 
+This is handled in `index.html` and `sensor.js`.
