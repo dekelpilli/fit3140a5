@@ -22,4 +22,11 @@ server.listen(8000, function() {
   console.log('Listening on port 8000') 
 })
 
+io.on("connection", function(socket) {
+  socket.on("token", function(msg) {
+    console.log(msg)
+  })
+})
+
+
 sensor(io, five, ref)
