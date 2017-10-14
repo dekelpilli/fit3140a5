@@ -24,7 +24,7 @@ server.listen(8000, function() {
 
 io.on("connection", function(socket) {
   socket.on("signin", function(msg) {
-    if (msg === "true") {
+    if (msg === true) {
       sensor(ref, five)
     }
   })
