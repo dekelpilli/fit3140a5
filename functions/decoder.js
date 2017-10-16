@@ -1,5 +1,12 @@
 var winston = require('winston')
 
+var LanguageTranslatorV2 = require('watson-developer-cloud/language-translator/v2');
+var language_translator = new LanguageTranslatorV2({
+    "url": "https://gateway.watsonplatform.net/language-translator/api",
+    "username": "8996e846-c292-44f4-9dd5-bea3a97e1a19",
+    "password": "J86Il1wBdchQ"
+});
+
 const morseTable = {
     'SL': 'A', 'LSSS': 'B', 'LSLS': 'C', 'LSS': 'D', 'S': 'E', 'SSLS': 'F', 'LLS': 'G', 
     'SSSS': 'H', 'SS': 'I', 'SLLL': 'J', 'LSL': 'K', 'SLSS': 'L', 'LL': 'M', 'LS': 'N', 
@@ -68,12 +75,7 @@ Decoder.prototype.decode = function() {
                 write = this._decodedWord
                 this._decodedWord = ""
                 if(write.length > 0) {
-                    this._admin.database().ref("/morseDecoded").push(
-                        {
-                            "wordEnd": motionData.end,
-                            "English": write,
-                            "French": writeFrench
-                        })
+                    this.pushWithTranslation(write, this._admin.database().ref("/morseDecoded"), motionData.end)
                 }
                 winston.info("Pushed")
                 return
@@ -103,6 +105,24 @@ Decoder.prototype.decodeAll = function() {
     while(Object.keys(this._event).length > 0) {
         this.decode();
     }
+}
+
+Decoder.prototype.pushWithTranslation = function(msg, ref, time) {
+    language_translator.translate({
+        text: msg, source : 'en', target: 'fr' },
+        function (err, translation) {
+          if (err)
+            console.log('error:', err);
+          else
+            french = translation['translations'][0]['translation']
+            ref.push(
+                {
+                    "wordEnd": time,
+                    "English": msg,
+                    "French": french
+                })
+            winston.info("Pushed " + msg + " to firebase.")
+      });
 }
 
 module.exports = Decoder;
