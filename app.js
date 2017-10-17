@@ -31,43 +31,43 @@ it('One word',
         expect(obj._decodedWord).to.equal("SOS")
     })
 
-it('Seperate words',
+it('Seperate words, THIS IS A TEST',
     function() {
         obj = new dc([
-            { end: 107500, start: 100500, type: 'gap' },
-            { end: 100500, start: 96000, type: 'mark' },
-            { end: 96000, start: 93000, type: 'gap' },
-            { end: 93000, start: 91500, type: 'mark' },
-            { end: 90500, start: 89000, type: 'mark' },
-            { end: 88000, start: 86500, type: 'mark' },
-            { end: 86500, start: 83500, type: 'gap' },
-            { end: 83500, start: 82000, type: 'mark' },
-            { end: 82000, start: 79000, type: 'gap' },
-            { end: 79000, start: 74500, type: 'mark' },
-            { end: 74500, start: 67500, type: 'gap' },
-            { end: 67500, start: 63000, type: 'mark' },
-            { end: 62000, start: 60500, type: 'mark' },
-            { end: 60500, start: 53500, type: 'gap' },
-            { end: 53500, start: 52000, type: 'mark' },
-            { end: 51000, start: 49500, type: 'mark' },
-            { end: 48500, start: 47000, type: 'mark' },
-            { end: 47000, start: 44000, type: 'gap' },
-            { end: 44000, start: 42500, type: 'mark' },
-            { end: 41500, start: 40000, type: 'mark' },
-            { end: 40000, start: 33000, type: 'gap' },
-            { end: 33000, start: 31500, type: 'mark' },
-            { end: 30500, start: 29000, type: 'mark' },
-            { end: 28000, start: 26500, type: 'mark' },
-            { end: 26500, start: 23500, type: 'gap' },
-            { end: 23500, start: 22000, type: 'mark' },
-            { end: 21000, start: 19500, type: 'mark' },
-            { end: 19500, start: 16500, type: 'gap' },
-            { end: 16500, start: 15000, type: 'mark' },
-            { end: 14000, start: 12500, type: 'mark' },
-            { end: 11500, start: 10000, type: 'mark' },
-            { end: 9000, start: 7500, type: 'mark' },
-            { end: 7500, start: 4500, type: 'gap' },
-            { end: 4500, start: 0, type: 'mark' }
+            {end:107500,start:100500,type:"gap"},
+            {end:100500,start:96000,type:"mark"},
+            {end:96000,start:93000,type:"gap"},
+            {end:93000,start:91500,type:"mark"},
+            {end:90500,start:89000,type:"mark"},
+            {end:88000,start:86500,type:"mark"},
+            {end:86500,start:83500,type:"gap"},
+            {end:83500,start:82000,type:"mark"},
+            {end:82000,start:79000,type:"gap"},
+            {end:79000,start:74500,type:"mark"},
+            {end:74500,start:67500,type:"gap"},
+            {end:67500,start:63000,type:"mark"},
+            {end:62000,start:60500,type:"mark"},
+            {end:60500,start:53500,type:"gap"},
+            {end:53500,start:52000,type:"mark"},
+            {end:51000,start:49500,type:"mark"},
+            {end:48500,start:47000,type:"mark"},
+            {end:47000,start:44000,type:"gap"},
+            {end:44000,start:42500,type:"mark"},
+            {end:41500,start:40000,type:"mark"},
+            {end:40000,start:33000,type:"gap"},
+            {end:33000,start:31500,type:"mark"},
+            {end:30500,start:29000,type:"mark"},
+            {end:28000,start:26500,type:"mark"},
+            {end:26500,start:23500,type:"gap"},
+            {end:23500,start:22000,type:"mark"},
+            {end:21000,start:19500,type:"mark"},
+            {end:19500,start:16500,type:"gap"},
+            {end:16500,start:15000,type:"mark"},
+            {end:14000,start:12500,type:"mark"},
+            {end:11500,start:10000,type:"mark"},
+            {end:9000,start:7500,type:"mark"},
+            {end:7500,start:4500,type:"gap"},
+            {end:4500,start:0,type:"mark"}
         ], null)
         obj.decodeAll()
 
@@ -85,7 +85,7 @@ it('One word with invalid letter',
             { end: "4000", start: "3000", type: "mark" },
             // gap between letters
             { end: "8000", start: "4000", type: "gap" },
-            // O
+            // INVALID
             { end: "10000", start: "7000", type: "mark" },
             { end: "13000", start: "10000", type: "mark" },
             { end: "15000", start: "14000", type: "mark" },
@@ -100,5 +100,41 @@ it('One word with invalid letter',
         obj.decodeAll()
 
         expect(obj._decodedWord).to.equal("SS")
+    })
+it('A SK B C - should be stopped on SK',
+    function() {
+        obj = new dc([
+            //SPACE
+            {end:84000,start:77000,type:"gap"},
+            //C
+            {end:77000,start:75500,type:"mark"},
+            {end:74500,start:70000,type:"mark"},
+            {end:69000,start:67500,type:"mark"},
+            {end:66500,start:62000,type:"mark"},
+            //SAPCE
+            {end:62000,start:55000,type:"gap"},
+            //B
+            {end:55000,start:53500,type:"mark"},
+            {end:52500,start:51000,type:"mark"},
+            {end:50000,start:48500,type:"mark"},
+            {end:47500,start:43000,type:"mark"},
+            //SPACE
+            {end:43000,start:36000,type:"gap"},
+            //SSSLSL - SK
+            {end:36000,start:31500,type:"mark"},
+            {end:30500,start:29000,type:"mark"},
+            {end:28000,start:20500,type:"mark"},
+            {end:20500,start:19000,type:"mark"},
+            {end:18000,start:16500,type:"mark"},
+            {end:15500,start:14000,type:"mark"},
+            //SPACE
+            {end:14000,start:7000,type:"gap"},
+            //A
+            {end:7000,start:2500,type:"mark"},
+            {end:1500,start:0,type:"mark"}
+        ])
+        obj.decodeAll()
+
+        expect(obj._decodedWord).to.equal("SK")
     })
 })

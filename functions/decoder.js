@@ -65,11 +65,13 @@ Decoder.prototype.decode = function() {
             winston.info("Long gap detected")
             
             if (morseTable.hasOwnProperty(this._currentWord)) {
-                this._decodedWord += morseTable[this._currentWord]
+                addition = morseTable[this._currentWord]
+                if(addition == "SK") {
+                    this._decodedWord = addition
+                    return true //end
+                } 
+                this._decodedWord += addition
                 this._currentWord = ""
-                if(this._decodedWord.equals("SK")) {
-                    return true //end    
-                }
             } else {
                 winston.debug(this._currentWord + " is not a valid word")
                 this._currentWord = ""
@@ -107,6 +109,8 @@ Decoder.prototype.decodeAll = function() {
     console.log(Object.keys(this._event).length)
     while(Object.keys(this._event).length > 0) {
         if(this.decode()) {
+            console.log("FINISHED:")
+            console.log(this._event)
             break
         }
     }
