@@ -13,7 +13,7 @@ const morseTable = {
     'LLL': 'O', 'SLLS': 'P', 'LLSL': 'Q', 'SLS': 'R', 'SSS': 'S', 'L': 'T', 'SSL': 'U', 
     'SSSL': 'V', 'SLL': 'W', 'LSSL': 'X', 'LSLL': 'Y', 'LLSS': 'Z', 'LLLLL': '0', 'SLLLL': '1',
     'SSLLL': '2', 'SSSLL': '3', 'SSSSL':'4', 'SSSSS':'5', 'LSSSS': '6', 'LLSSS': '7',
-    'LLLSS': '8', 'LLLLS': '9'
+    'LLLSS': '8', 'LLLLS': '9', 'SSSLSL': 'SK'
 }
 
 let currentWord = ""
@@ -67,6 +67,9 @@ Decoder.prototype.decode = function() {
             if (morseTable.hasOwnProperty(this._currentWord)) {
                 this._decodedWord += morseTable[this._currentWord]
                 this._currentWord = ""
+                if(this._decodedWord.equals("SK")) {
+                    return true //end    
+                }
             } else {
                 winston.debug(this._currentWord + " is not a valid word")
                 this._currentWord = ""
@@ -103,7 +106,9 @@ Decoder.prototype.decodeAll = function() {
     console.log(this._event)
     console.log(Object.keys(this._event).length)
     while(Object.keys(this._event).length > 0) {
-        this.decode();
+        if(this.decode()) {
+            break
+        }
     }
 }
 
