@@ -1,6 +1,8 @@
 var admin = require("firebase-admin");
-
 var serviceAccount = require("../serviceAccountKey.json");
+
+var Speech = require("./text-to-speech.js")
+var textSpeaker = new Speech();
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -24,6 +26,7 @@ ref.on('value', function(snapshot) {
     for (i = 0; i < wordKeys.length; i++) { 
         if(!(wordKeys[i] in logged)) {
             console.log("English: " + words[wordKeys[i]].English + ", French: " + words[wordKeys[i]].French)
+            textSpeaker.add(words[wordKeys[i]].English)
             logged[wordKeys[i]] = words[wordKeys[i]]
         }
     } 
