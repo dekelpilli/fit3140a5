@@ -1,0 +1,22 @@
+.main-card.mdl-card {
+    width: 512px;
+}
+.mdl-card__title-text {
+    font-size: 30px;
+    font-weight: 300;
+}
+.main-card > .mdl-card__title {
+    color: #fff;
+    height: 121px;
+    background: #3F51B5;
+}
+.main-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+body {
+    font-family: "Roboto", sans-serif !important;
+}
