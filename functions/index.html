@@ -2,15 +2,31 @@
 <html>
   <head>
     <script src="/socket.io/socket.io.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link rel="stylesheet" href="stylesheet.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
     <title>FIT3140a5 Authentication</title>
     <meta charset='utf-8' />
   </head>
-  <body>
-    <p>FIT3140a5 Authentication</p>
-
-    <!--Add buttons to initiate auth sequence and sign out-->
-    <button id="authorize-button" style="display: none;">Authorize</button>
-    <button id="signout-button" style="display: none;">Sign Out</button>
+  <body class="mdl-color--grey-100">
+  <div class="main-card mdl-card mdl-shadow--4dp">
+      <div class="mdl-card__title">
+        <h1 class="mdl-card__title-text">Authentication</h1>
+      </div>
+      <div class="mdl-card__supporting-text">
+        This will authorise your Google Account to access the Morse Code Decoder. Only monash.edu email addresses are allowed.
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <a style="display: none;" id="authorize-button" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+          Authorise
+        </a>
+        <a style="display: none;" id="signout-button" class="signout-button mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect">
+          Sign Out
+        </a>
+      </div>
+    </div>
 
     <pre id="content"></pre>
 
@@ -74,7 +90,7 @@
                   console.log("Email: " + resp.email);
 
                   authorizeButton.style.display = 'none';
-                  signoutButton.style.display = 'block';
+                  signoutButton.style.display = 'inline-block';
                   var socket = io.connect("http://localhost:8000", {reconnection:false});
                   //socket.emit("signin", "true")
                   
@@ -86,7 +102,7 @@
           
 
         } else {
-          authorizeButton.style.display = 'block';
+          authorizeButton.style.display = 'inline-block';
           signoutButton.style.display = 'none';
         }
       }
