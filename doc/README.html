@@ -1,0 +1,124 @@
+<h1 id="assignment-5-team-2">Assignment 5, Team 2</h1>
+
+
+
+<h3 id="testing">Testing</h3>
+
+<p>To run the tests, from the main folder, enter the following command: <br>
+<code>mocha app.js</code></p>
+
+
+
+<h3 id="decoding">Decoding</h3>
+
+<p><code>index.js</code> reads data from from the firebase, then calls <code>decoder.js</code> to convert the data into words. This is all handled via firebase functions.</p>
+
+<p>Alternatively, you may use <code>auth-server.js</code> to do this locally, although this should not be necessary.</p>
+
+
+
+<h3 id="viewing-listening">Viewing &amp; Listening</h3>
+
+<p>Use <code>node client-side-reader.js</code> from the <em>functions</em> folder to view data on the firebase. This will update with any new morseDecoded pushes. <br>
+Additionally, this will trigger <code>text-to-speech.js</code> to create .wav files and play them when you first open <code>cient-side-reader.js</code> and every time it senses new data.</p>
+
+
+
+<h3 id="sensor-authentication">Sensor &amp; Authentication</h3>
+
+<p>To use the sensor, you must be logged in with a Monash email. To do so, run <code>auth-server.js</code> in the <em>functions</em> and load <code>localhost:8000</code>, then log in. Once you have logged in with a Monash email, the system will open up the sensor. The sensor will automatically connect to the firebase and send the motion information.  </p>
+
+<p>This is handled in <code>index.html</code> and <code>sensor.js</code>.</p>
+
+<script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="main" src="./StackEdit – Editor_files/main.js.download"></script><link type="text/css" rel="stylesheet" href="./StackEdit – Editor_files/default.css"><script type="text/x-mathjax-config;executed=true">MathJax.Hub.Config({
+	skipStartupTypeset: true,
+    "HTML-CSS": {
+        preferredFont: "TeX",
+        availableFonts: [
+            "TeX"
+        ],
+        linebreaks: {
+            automatic: true
+        },
+        EqnChunk: 10,
+        imageFont: null
+    },
+    tex2jax: { inlineMath: [["$","$"],["\\\\(","\\\\)"]], displayMath: [["$$","$$"],["\\[","\\]"]], processEscapes: true },
+    TeX: $.extend({
+        noUndefined: {
+            attributes: {
+                mathcolor: "red",
+                mathbackground: "#FFEEEE",
+                mathsize: "90%"
+            }
+        },
+        Safe: {
+            allow: {
+                URLs: "safe",
+                classes: "safe",
+                cssIDs: "safe",
+                styles: "safe",
+                fontsize: "all"
+            }
+        }
+    }, undefined),
+    messageStyle: "none"
+});
+</script><style type="text/css">@media (min-width: 0px) {
+#wmd-input {
+   font-size: 16px;
+}
+#preview-contents {
+   font-size: 16px;
+}
+}@media (min-width: 600px) {
+#wmd-input {
+   font-size: 17px;
+}
+#preview-contents {
+   font-size: 17px;
+}
+}@media (min-width: 1200px) {
+#wmd-input {
+   font-size: 18px;
+}
+#preview-contents {
+   font-size: 18px;
+}
+}</style><style type="text/css">@keyframes working-indicator-bar0 {
+    0% { opacity:0.25; }
+    0.01% { opacity:0.25; }
+    0.02% { opacity:1; }
+    50.01% { opacity:0.25; }
+    100% { opacity:0.25; }
+}@-webkit-keyframes working-indicator-bar0 {
+    0% { opacity:0.25; }
+    0.01% { opacity:0.25; }
+    0.02% { opacity:1; }
+    50.01% { opacity:0.25; }
+    100% { opacity:0.25; }
+}@keyframes working-indicator-bar1 {
+    0% { opacity:0.25; }
+    20.01% { opacity:0.25; }
+    20.02% { opacity:1; }
+    70.01% { opacity:0.25; }
+    100% { opacity:0.25; }
+}@-webkit-keyframes working-indicator-bar1 {
+    0% { opacity:0.25; }
+    20.01% { opacity:0.25; }
+    20.02% { opacity:1; }
+    70.01% { opacity:0.25; }
+    100% { opacity:0.25; }
+}@keyframes working-indicator-bar2 {
+    0% { opacity:0.25; }
+    40.01% { opacity:0.25; }
+    40.02% { opacity:1; }
+    90.01% { opacity:0.25; }
+    100% { opacity:0.25; }
+}@-webkit-keyframes working-indicator-bar2 {
+    0% { opacity:0.25; }
+    40.01% { opacity:0.25; }
+    40.02% { opacity:1; }
+    90.01% { opacity:0.25; }
+    100% { opacity:0.25; }
+}
